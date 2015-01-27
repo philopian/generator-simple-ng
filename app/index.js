@@ -1,54 +1,51 @@
 'use strict';
-var util = require('util');
-var path = require('path');
-var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
+var util    = require('util');
+var path    = require('path');
+var yeoman  = require('yeoman-generator');
+var chalk   = require('chalk');
 
-var SimpleNgGenerator = yeoman.generators.Base.extend({
-  initializing: function () {
-    this.pkg = require('../package.json');
-  },
+var HereGenerator = yeoman.generators.Base.extend({
 
-  prompting: function () {
-    var done = this.async();
 
-    // Have Yeoman greet the user.
-    this.log(yosay(
-      'Welcome to the laudable SimpleNg generator!'
-    ));
+    // prompt messages in terminal
+    promptUser: function() {
+        var done = this.async();
 
-    var prompts = [{
-      type: 'confirm',
-      name: 'someOption',
-      message: 'Would you like to enable this option?',
-      default: true
-    }];
+        // have Yeoman greet the user
+        console.log(this.yeoman);
 
-    this.prompt(prompts, function (props) {
-      this.someOption = props.someOption;
+        var prompts = [
+            {
+                name: 'appName',
+                message: 'What is your app\'s name ?',
+                write: "your app name: " + this.appName
+            }
+        ];
 
-      done();
-    }.bind(this));
-  },
+        this.prompt(prompts, function (props) {
 
-  writing: {
-    app: function () {
-      this.dest.mkdir('app');
-      this.dest.mkdir('app/templates');
+            this.appName              = props.appName;
+            this.confirmRadness       = props.confirmRadness;
+            this.listItemPicked       = props.listItemPicked;
+            this.checkboxItemsPicked  = props.checkboxItemsPicked;
 
-      this.src.copy('_package.json', 'package.json');
-      this.src.copy('_bower.json', 'bower.json');
+            done();
+        }.bind(this));
     },
 
-    projectfiles: function () {
-      this.src.copy('editorconfig', '.editorconfig');
-      this.src.copy('jshintrc', '.jshintrc');
-    }
-  },
 
-  end: function () {
-    this.installDependencies();
-  }
+    // show the results that the user has chosen
+    showResults: function(){
+        var context = {
+            app_name: this.appName
+        };
+
+        console.log(JSON.stringify(context));
+    },// showResults
+
+
+
+
 });
 
-module.exports = SimpleNgGenerator;
+module.exports = HereGenerator;

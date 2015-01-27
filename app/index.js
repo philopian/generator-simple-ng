@@ -45,6 +45,14 @@ var HereGenerator = yeoman.generators.Base.extend({
 
 
 
+    // create the folders for your app
+    scaffoldFolders: function(){
+        this.mkdir("app");
+        this.mkdir("app/welcome");
+        this.mkdir("assets/images");
+    },
+
+
 
 });
 

@@ -62,11 +62,9 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     );
 
 
-
-
   // inject js (controller.js/.js) into the index.html
-  var readHtmlFile = destDirPath+'/index.html';
-  fs.readFile(readHtmlFile, 'utf8', function(err, data) {
+  var indexHtmlFile = destDirPath+'/index.html';
+  fs.readFile(indexHtmlFile, 'utf8', function(err, data) {
     if (err) throw err;
 
     // find substring to update
@@ -84,12 +82,30 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     // update the html file
     var newHtmlContent = data.replace(contentsToUpdate, newContentToUpdate);
 
-    fs.writeFile(readHtmlFile, newHtmlContent, function(err){
+    fs.writeFile(indexHtmlFile, newHtmlContent, function(err){
       if (err) throw err;
       console.log(chalk.green('injected into index.html '), scriptJs );
       console.log(chalk.green('injected into index.html '), scriptControllerJs );
     });
   });// fs.readFile
+
+
+  // inject css into the /app/app.css
+  var cssFile = destDirPath+'/app/app.css';
+  fs.readFile(cssFile, 'utf8', function(err, data) {
+    if (err) throw err;
+
+    var linkCss = '@import url("./'+ngRouteName+'/'+ngRouteName+'.css");';
+    data += '\n'+linkCss+'\n';
+
+    fs.writeFile(cssFile, data, function(err){
+      if (err) throw err;
+      console.log(chalk.green('injected into /app/app.css '), linkCss );
+    });
+  });// fs.readFile
+
+
+
 
 
 

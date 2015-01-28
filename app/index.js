@@ -54,6 +54,76 @@ var HereGenerator = yeoman.generators.Base.extend({
 
 
 
+
+    copyMainFiles: function(){
+
+        var placeholderValues = {
+            YOUR_APP_NAME_HERE : this.appName
+        }
+
+
+        // copy files and pass placeholder to the files that have placeholder item
+        this.template(  
+            "baseApp/_bower.json",    
+            "bower.json", 
+            placeholderValues
+        );
+        this.copy(
+            "baseApp/favicon.ico",
+            "favicon"
+        );
+        this.copy(
+            "baseApp/assets/images/yeoman.png",  
+            "assets/images/yeoman.png"
+        );
+        this.template(
+            "baseApp/_index.html",                
+            "index.html", 
+            placeholderValues
+        );
+        this.copy(
+            "baseApp/app/_app.css", 
+            "app/app.css"
+        );
+        this.template(
+            "baseApp/app/_app.js", 
+            "app/app.js", 
+            placeholderValues
+        );
+        this.template(
+            "baseApp/app/welcome/_welcome.controller.js", 
+            "app/welcome/welcome.controller.js", 
+            placeholderValues
+        );
+        this.template(
+            "baseApp/app/welcome/_welcome.controller.spec.js", 
+            "app/welcome/welcome.controller.spec.js", 
+            placeholderValues
+        );
+        this.copy(
+            "baseApp/app/welcome/_welcome.css", 
+            "app/welcome/welcome.css"
+        );
+        this.template(
+            "baseApp/app/welcome/_welcome.html", 
+            "app/welcome/welcome.html", 
+            placeholderValues
+        );
+        this.template(
+            "baseApp/app/welcome/_welcome.js", 
+            "app/welcome/welcome.js", 
+            placeholderValues
+        );
+    }
+
+
+
+
+
+
+
+
+
 });
 
 module.exports = HereGenerator;

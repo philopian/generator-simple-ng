@@ -23,7 +23,7 @@ describe('Controller: WelcomeCtrl', function () {
 
 
   it('should attach a list of things to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(9);
+    expect(scope.awesomeThings.length).toBe(10);
   });
 
 

@@ -4,7 +4,7 @@ var path    = require('path');
 var yeoman  = require('yeoman-generator');
 var chalk   = require('chalk');
 
-var HereGenerator = yeoman.generators.Base.extend({
+var SimpleNgGenerator = yeoman.generators.Base.extend({
 
 
     // prompt messages in terminal
@@ -138,9 +138,6 @@ var HereGenerator = yeoman.generators.Base.extend({
 
 
 
-
-
-
 });
 
-module.exports = HereGenerator;
+module.exports = SimpleNgGenerator;

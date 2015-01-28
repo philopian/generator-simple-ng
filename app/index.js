@@ -114,6 +114,12 @@ var HereGenerator = yeoman.generators.Base.extend({
             "app/welcome/welcome.js", 
             placeholderValues
         );
+
+
+        // install bower components
+        this.bowerInstall("", function(){
+            console.log("\nEverything Setup !!!\n");
+        });
     }
 
 

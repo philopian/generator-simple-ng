@@ -1,8 +1,9 @@
 'use strict';
-var util 	= require('util');
-var fs 		= require('fs');
+var util 	  = require('util');
+var fs 		  = require('fs');
 var yeoman 	= require('yeoman-generator');
-var _ 		= require('lodash');
+var _ 		  = require('lodash');
+var chalk   = require('chalk');
 
 var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
   initializing: function () {
@@ -60,6 +61,35 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
         routePlaceholderValues
     );
 
+
+
+
+  // inject js (controller.js/.js) into the index.html
+  var readHtmlFile = destDirPath+'/index.html';
+  fs.readFile(readHtmlFile, 'utf8', function(err, data) {
+    if (err) throw err;
+
+    // find substring to update
+    var re = /<!-- inject:js -->([\s\S]*?)<!-- endinject -->/m
+    var contentsToUpdate = data.match(re)[1];
+
+    // new content
+    var scriptJs = '<script src="./app/'+ngRouteName+'/'+ngRouteName+'.js"></script>';
+    var scriptControllerJs = '<script src="./app/'+ngRouteName+'/'+ngRouteName+'.controller.js"></script>';
+    var scriptsToAdd = scriptJs+'\n'+scriptControllerJs+'\n';
+
+    // append new content
+    var newContentToUpdate = contentsToUpdate+scriptsToAdd;
+
+    // update the html file
+    var newHtmlContent = data.replace(contentsToUpdate, newContentToUpdate);
+
+    fs.writeFile(readHtmlFile, newHtmlContent, function(err){
+      if (err) throw err;
+      console.log(chalk.green('injected into index.html '), scriptJs );
+      console.log(chalk.green('injected into index.html '), scriptControllerJs );
+    });
+  });// fs.readFile
 
 
 

@@ -81,6 +81,16 @@ var HereGenerator = yeoman.generators.Base.extend({
             "index.html", 
             placeholderValues
         );
+        this.template(
+            "baseApp/app/ui-components/navbar/_navbar.html",  
+            "app/ui-components/navbar/navbar.html", 
+            placeholderValues
+        );
+        this.template(
+            "baseApp/app/ui-components/navbar/_navbar.controller.js",                
+            "app/ui-components/navbar/navbar.controller.js", 
+            placeholderValues
+        );
         this.copy(
             "baseApp/app/_app.css", 
             "app/app.css"

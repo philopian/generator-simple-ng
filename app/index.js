@@ -59,8 +59,11 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
     copyMainFiles: function(){
 
         var placeholderValues = {
-            YOUR_APP_NAME_HERE : this.appName
+            YOUR_NG_APP:            this._.camelize(this.appName)+"App",
+            YOUR_APP_NAME_HERE :    this.appName
         }
+
+        var camelizeVariable = this._.camelize(this.appname);
 
 
         // copy files and pass placeholder to the files that have placeholder item

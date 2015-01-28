@@ -3,7 +3,7 @@
 describe('Controller: WelcomeCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('<%= YOUR_NG_APP %>'));
+  beforeEach(module('<%= NG_APP_NAME %>'));
 
   var WelcomeCtrl, 
       scope;

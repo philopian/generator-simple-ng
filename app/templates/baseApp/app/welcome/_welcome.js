@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('<%= YOUR_NG_APP %>')
+angular.module('<%= NG_APP_NAME %>')
   .config(function ($stateProvider) {
     $stateProvider
       .state('welcome', {

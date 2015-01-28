@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('<%= YOUR_NG_APP %>')
+angular.module('<%= NG_APP_NAME %>')
     .controller('WelcomeCtrl', function ($scope) {
 
     	$scope.awesomeThings = [

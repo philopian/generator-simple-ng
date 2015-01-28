@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('<%= YOUR_NG_APP %>')
+angular.module('<%= NG_APP_NAME %>')
     .controller('NavbarCtrl', function ($scope, $location) {
 
         // Menu list a bunch of items in the navbar here

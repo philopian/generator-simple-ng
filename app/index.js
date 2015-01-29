@@ -23,7 +23,6 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
         ];
 
         this.prompt(prompts, function (props) {
-
             this.appName              = props.appName;
             this.confirmRadness       = props.confirmRadness;
             this.listItemPicked       = props.listItemPicked;
@@ -39,8 +38,6 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
         var context = {
             app_name: this.appName
         };
-
-        console.log(JSON.stringify(context));
     },// showResults
 
 

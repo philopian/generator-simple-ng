@@ -129,7 +129,7 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
 
         // install bower components
         this.bowerInstall("", function(){
-            console.log("\nEverything Setup !!!\n");
+            console.log(chalk.green("\nEverything Setup! enjoy!\n"));
         });
     }
 

@@ -16,7 +16,7 @@ var routePlaceholderValues = {};
 var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
 
   initializing: function () {
-    this.log('You called the simple-ng subgenerator with the argument ' + this.name + '.');
+    this.log('Wait a couple secs while we build out your "' + this.name + '" route files.');
   },
 
   getParams: function() {

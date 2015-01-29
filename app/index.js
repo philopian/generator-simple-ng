@@ -83,8 +83,8 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
             "gulpfile.js"
         );
         this.copy(
-            "_packages.json",
-            "packages.json"
+            "_package.json",
+            "package.json"
         );
         this.copy(
             "baseApp/favicon.ico",

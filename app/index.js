@@ -44,10 +44,11 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
 
     // create the folders for your app
     scaffoldFolders: function(){
-        this.mkdir("app");
-        this.mkdir("app/welcome");
-        this.mkdir("app/ui-components/navbar");
-        this.mkdir("assets/images");
+        this.mkdir("webClient")
+        this.mkdir("webClient/app");
+        this.mkdir("webClient/app/welcome");
+        this.mkdir("webClient/app/ui-components/navbar");
+        this.mkdir("webClient/assets/images");
     },
 
 
@@ -65,64 +66,76 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
 
         // copy files and pass placeholder to the files that have placeholder item
         this.template(  
-            "baseApp/_bower.json",    
+            "_bower.json",    
             "bower.json", 
             placeholderValues
         );
         this.copy(
+            "_.bowerrc",
+            ".bowerrc"
+        );
+        this.copy(
+            "_.gitignore",
+            ".gitignore"
+        );
+        this.copy(
+            "_gulpfile.js",
+            "gulpfile"
+        );
+        this.copy(
             "baseApp/favicon.ico",
-            "favicon"
+            "webClient/favicon"
         );
         this.copy(
             "baseApp/assets/images/yeoman.png",  
-            "assets/images/yeoman.png"
+            "webClient/assets/images/yeoman.png"
         );
         this.template(
             "baseApp/_index.html",                
-            "index.html", 
+            "webClient/index.html", 
             placeholderValues
         );
         this.template(
             "baseApp/app/ui-components/navbar/_navbar.html",  
-            "app/ui-components/navbar/navbar.html", 
+            "webClient/app/ui-components/navbar/navbar.html", 
             placeholderValues
         );
         this.template(
             "baseApp/app/ui-components/navbar/_navbar.controller.js",                
-            "app/ui-components/navbar/navbar.controller.js", 
+            "webClient/app/ui-components/navbar/navbar.controller.js", 
             placeholderValues
         );
         this.copy(
             "baseApp/app/_app.css", 
-            "app/app.css"
+            "webClient/app/app.css"
         );
         this.template(
             "baseApp/app/_app.js", 
-            "app/app.js", 
+            "webClient/app/app.js", 
             placeholderValues
         );
         this.template(
             "baseApp/app/welcome/_welcome.controller.js", 
-            "app/welcome/welcome.controller.js", 
+            "webClient/app/welcome/welcome.controller.js", 
             placeholderValues
         );
         this.template(
             "baseApp/app/welcome/_welcome.controller.spec.js", 
-            "app/welcome/welcome.controller.spec.js", 
+            "webClient/app/welcome/welcome.controller.spec.js", 
             placeholderValues
         );
         this.copy(
             "baseApp/app/welcome/_welcome.css", 
-            "app/welcome/welcome.css"
+            "webClient/app/welcome/welcome.css"
         );
         this.template(
             "baseApp/app/welcome/_welcome.html", 
-            "app/welcome/welcome.html", 
+            "webClient/app/welcome/welcome.html", 
             placeholderValues
         );
         this.template(
             "baseApp/app/welcome/_welcome.js", 
-            "app/welcome/welcome.js", 
+            "webClient/app/welcome/welcome.js", 
             placeholderValues
         );
 

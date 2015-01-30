@@ -38,11 +38,11 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     }
 
     // check to see if route directory already exist
-    var routePath = appParams.destDirPath+"/app/"+appParams.ngRouteName;
+    var routePath = appParams.destDirPath+"/webClient/app/"+appParams.ngRouteName;
     fs.exists(routePath, function(exists) {
       if (exists) {
         dupRoute = true;
-        console.log(chalk.red("..*** there already seems to be a route with that name"));
+        console.log(chalk.red("*** there already seems to be a route with that name, please choose another route name."));
       }//if dir exist
     });
   },
@@ -53,31 +53,31 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     if (!dupRoute) {
 
       // CHECK TO SEE IF THE ROUTE DOESN'T ALREADY EXIST!!
-      var basePath = appParams.destDirPath+"/app/"+appParams.ngRouteName;
+      var baseRoutePath = appParams.destDirPath+"/webClient/app/"+appParams.ngRouteName;
 
       // copy template to dest dir
       this.copy(
         "newRoute/_newRoute.css",
-        basePath+"/"+appParams.ngRouteName+".css"
+        baseRoutePath+"/"+appParams.ngRouteName+".css"
       );
       this.template(
         "newRoute/_newRoute.controller.js",
-        basePath+"/"+appParams.ngRouteName+".controller.js" ,
+        baseRoutePath+"/"+appParams.ngRouteName+".controller.js" ,
         routePlaceholderValues
       );
       this.template(
         "newRoute/_newRoute.controller.spec.js",
-        basePath+"/"+appParams.ngRouteName+".controller.spec.js",
+        baseRoutePath+"/"+appParams.ngRouteName+".controller.spec.js",
         routePlaceholderValues
       );
       this.template(
         "newRoute/_newRoute.html",
-        basePath+"/"+appParams.ngRouteName+".html",
+        baseRoutePath+"/"+appParams.ngRouteName+".html",
         routePlaceholderValues
       );
       this.template(
         "newRoute/_newRoute.js",
-        basePath+"/"+appParams.ngRouteName+".js",
+        baseRoutePath+"/"+appParams.ngRouteName+".js",
         routePlaceholderValues
       );
     }
@@ -91,7 +91,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     if (!dupRoute) {
 
       // inject js (controller.js/.js) into the index.html
-      var indexHtmlFile = appParams.destDirPath+'/index.html';
+      var indexHtmlFile = appParams.destDirPath+'/webClient/index.html';
       fs.exists(indexHtmlFile, function(exists) {
         if (exists) {
           fs.readFile(indexHtmlFile, 'utf8', function(err, data) {
@@ -133,7 +133,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     if (!dupRoute) {
 
       // inject css into the /app/app.css
-      var cssFile = appParams.destDirPath+'/app/app.css';
+      var cssFile = appParams.destDirPath+'/webClient/app/app.css';
       fs.readFile(cssFile, 'utf8', function(err, data) {
         if (err) {
           console.log(chalk.red("./app/app.css seems to be missing??"));

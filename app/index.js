@@ -4,8 +4,16 @@ var path    = require('path');
 var yeoman  = require('yeoman-generator');
 var chalk   = require('chalk');
 
-var SimpleNgGenerator = yeoman.generators.Base.extend({
 
+// gobals
+var dependsCompleted = {bower:false,npm:false};
+function checkDependCompletion(){
+    if ((dependsCompleted.bower == true) && (dependsCompleted.npm == true)) {
+        console.log(chalk.green("\nYour app is all wired up, enjoy!\n"))
+    }
+}
+
+var SimpleNgGenerator = yeoman.generators.Base.extend({
 
     // prompt messages in terminal
     promptUser: function() {
@@ -142,11 +150,20 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
             "webClient/app/welcome/welcome.js", 
             placeholderValues
         );
+    },
 
-
+    installDepends: function(){
+        
         // install bower components
         this.bowerInstall("", function(){
-            console.log(chalk.green("\nEverything Setup! enjoy!\n"));
+            dependsCompleted.bower = true;
+            checkDependCompletion();
+        });
+
+        // install npm components
+        this.npmInstall("", function(){
+            dependsCompleted.npm = true;
+            checkDependCompletion();
         });
     }
 

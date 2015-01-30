@@ -22,3 +22,8 @@ Finally, initiate the generator:
 yo simple-ng
 ```
 
+what to add a new route to your app?? use the route sub-generator:
+
+```bash
+yo simple-ng:route <your_new_route_name>
+```

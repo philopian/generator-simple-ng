@@ -1,4 +1,5 @@
 var gulp = require('gulp')
+var fs   = require("fs");
 
 //--GULP PLUGINS----------------------------------------------------------------------
 var mainBowerFiles  = require('main-bower-files')
@@ -7,8 +8,8 @@ var replace         = require('gulp-replace');
 var chalk           = require('chalk');
 var runSequence     = require('run-sequence');
 var notify          = require("gulp-notify");
-
-
+var print           = require("gulp-print");
+var globby          = require('globby');
 
 
 
@@ -76,13 +77,54 @@ gulp.task('injectClientTags', function () {
                .pipe(inject(
                   gulp.src(filterDevContent, {read: false})
                ))
+               .pipe(print())
                .pipe(gulp.dest('./webClient'))
 });
 
+//--Inject client-side css @imports into the webClient/app/app.css
+gulp.task('injectCss', function () {
 
+  // inject css into the /app/app.css
+  var cssFile = __dirname+'/webClient/app/app.css';
+  
+  fs.readFile(cssFile, 'utf8', function(err, data) {
+    if (err) {
+      console.log(chalk.red("./app/app.css seems to be missing??"));
+    } else {
 
+      // find the content between inject:cssimports
+      var re = /inject:cssimports \*\/\n([\s\S]*?)\/\* endinject/;
+      var match = data.match(re);
 
+      // find all css files
+      var findFile = [
+        'webClient/app/**/*.css',
+        '!webClient/app/app.css'
+      ];
 
+      var newContent = "";
+      globby(findFile, function (err, paths) {
+          for (i in paths){
+            // wrap each file with @import statement
+            if (i != paths.length-1){
+              var newPath = '@import url("'+paths[i].replace('webClient/app','.')+'");\n';
+            } else {
+              var newPath = '@import url("'+paths[i].replace('webClient/app','.')+'");';
+            }
+            newContent += newPath
+          }
+          newContent = "inject:cssimports */\n"+newContent+"\n/* endinject";
+
+          var newData = data.replace(match[0], newContent);
+          fs.writeFile(cssFile, newData, function(err){
+            if (err) throw err;
+            console.log(chalk.green('injected into /app/app.css ') );
+          });
+      });//globby
+
+    }//no error
+  });// fs.readFile
+});
 
 
 
@@ -99,7 +141,7 @@ gulp.task('injectClientTags', function () {
 
 //--Cleanup all the script/style tags in the index.html file
 gulp.task('cleanTags', function(callback) {
-    runSequence(['cleanClientTags','injectClientTags'],['cleanBowerTags','injectBowerTags'], function(){
+    runSequence(['cleanClientTags','injectClientTags'],['cleanBowerTags','injectBowerTags'],'injectCss', function(){
 
       var sendMessage = "Finished cleaning/re-injecting client-side and Bower tags into the index.html";
 

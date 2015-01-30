@@ -1,4 +1,4 @@
-# generator-simple-ng ![logo](logo.jpg)
+# ![logo](logo.jpg) generator-simple-ng
 
 
 ## Getting Started

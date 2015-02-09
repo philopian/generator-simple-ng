@@ -1,9 +1,9 @@
 'use strict';
-var util    = require('util');
-var path    = require('path');
-var yeoman  = require('yeoman-generator');
-var chalk   = require('chalk');
-
+var util        = require('util');
+var path        = require('path');
+var yeoman      = require('yeoman-generator');
+var chalk       = require('chalk');
+var greeting    = require('../ascii-art-greeting');
 
 // gobals
 var dependsCompleted = {bower:false,npm:false};
@@ -20,7 +20,7 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
         var done = this.async();
 
         // have Yeoman greet the user
-        console.log(this.yeoman);
+        console.log(greeting.stacker);
 
         var prompts = [
             {

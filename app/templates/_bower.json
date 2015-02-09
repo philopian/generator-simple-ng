@@ -26,5 +26,11 @@
   },
   "overrides": {
     "leaflet": {"main": ["**/leaflet.js","**/leaflet.css"]}
+  },
+  "leaflet-draw": {
+    "main": [
+      "**/dist/leaflet.draw.js",
+      "**/dist/leaflet.draw.css"
+    ]
   }
 }

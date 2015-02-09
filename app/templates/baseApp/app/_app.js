@@ -6,9 +6,13 @@ angular.module('<%= NG_APP_NAME %>', [
     'ngSanitize',
     'ui.router'
 ])
-    .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
-        $urlRouterProvider
-            .otherwise('/');
+.config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+    $urlRouterProvider
+        .otherwise('/');
 
-        //$locationProvider.html5Mode(true);
-    });
+    //$locationProvider.html5Mode(true);
+})
+.constant("BASE_URL",{
+	"url": "http://localhost",
+	"port": "8080"
+});

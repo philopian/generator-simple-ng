@@ -74,9 +74,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
       process.chdir(path);
       var child = spawn('gulp', tasks);
       child.stdout.on('data', function(data) {
-          if (data) {
-              console.log(data.toString())
-          }
+          // if (data) console.log(data.toString())
       });
     }//if dupFactory
 

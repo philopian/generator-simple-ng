@@ -4,11 +4,12 @@ var path        = require('path');
 var yeoman      = require('yeoman-generator');
 var chalk       = require('chalk');
 var greeting    = require('../ascii-art-greeting');
+var fse     = require('fs-extra');
 
 // gobals
-var dependsCompleted = {bower:false,npm:false};
+var dependsCompleted = {bower:false,npm:false,npmServer:false};
 function checkDependCompletion(){
-    if ((dependsCompleted.bower == true) && (dependsCompleted.npm == true)) {
+    if ((dependsCompleted.bower == true) && (dependsCompleted.npm == true) && (dependsCompleted.npmServer == true)) {
         console.log(chalk.green("\nYour app is all wired up, enjoy!\n"))
     }
 }
@@ -57,7 +58,7 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
         this.mkdir("webClient/app/welcome");
         this.mkdir("webClient/app/ui-components/navbar");
         this.mkdir("webClient/assets/images");
-        this.mkdir("baseServer/");
+        this.mkdir("server/");
     },
 
 
@@ -106,11 +107,6 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
         this.template(
             "_package.json",
             "package.json",
-            placeholderValues
-        );
-        this.template(
-            "baseServer/_package.json",
-            "server/package.json",
             placeholderValues
         );
         this.template(
@@ -175,7 +171,31 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
         this.npmInstall("", function(){
             dependsCompleted.npm = true;
             checkDependCompletion();
+
+            installProjectServerDependencies();
         });
+
+
+        var templatePackageJsonFilePath = __dirname+"/templates/baseServer/_package.json";
+        var packageJsonFilePath = this.env.cwd+'/server/package.json';
+        var serverDirPath = this.env.cwd+'/server/';
+        function installProjectServerDependencies(){
+            fse.copy(templatePackageJsonFilePath, packageJsonFilePath, function (err) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    var spawn = require('child_process').spawn;
+                    var tasks = ['install']
+                    process.chdir(serverDirPath);
+                    var child = spawn('npm', tasks);
+                    child.stdout.on('data', function() {
+                        dependsCompleted.npmServer = true;
+                        checkDependCompletion();
+                    });    
+                }
+            }); 
+        }//installProjectServerDependencies()
+
     }
 
 

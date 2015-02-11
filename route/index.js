@@ -45,6 +45,14 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
         console.log(chalk.red("*** there already seems to be a route with that name, please choose another route name."));
       }//if dir exist
     });
+
+    var indexHtmlFile = appParams.destDirPath+'/webClient/index.html';
+    fs.exists(indexHtmlFile, function(exists) {
+      if (!exists) {
+        dupRoute = true;
+        console.log(chalk.red("*** Route not created, please run this command at the root of this application"));
+      }//if dir exist
+    });
   },
 
 

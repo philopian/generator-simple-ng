@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "chalk": "^0.5.0",
+    "fs-extra": "^0.16.3",
     "globby": "^1.1.0",
     "lodash": "^3.0.0",
     "yeoman-generator": "^0.17.0",

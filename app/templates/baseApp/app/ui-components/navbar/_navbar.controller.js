@@ -7,7 +7,7 @@ angular.module('<%= NG_APP_NAME %>')
         $scope.menu = [
             {
                 'title': 'Welcome',
-                'link': '/#/'
+                'link': '/'
             }
 
         ];

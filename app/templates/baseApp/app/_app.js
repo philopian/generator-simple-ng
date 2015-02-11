@@ -10,7 +10,7 @@ angular.module('<%= NG_APP_NAME %>', [
     $urlRouterProvider
         .otherwise('/');
 
-    //$locationProvider.html5Mode(true);
+    $locationProvider.html5Mode(true);
 })
 .constant("BASE_URL",{
 	"url": "http://localhost",

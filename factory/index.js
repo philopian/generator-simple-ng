@@ -9,7 +9,7 @@ var globby  = require('globby');
 
 // globals
 var appParams = {};
-var dupRoute = false;
+var dupFactory = false;
 var routePlaceholderValues = {};
 
 
@@ -36,10 +36,10 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     }
 
     // check to see if route directory already exist
-    var routePath = appParams.destDirPath+"/webClient/app/services/"+appParams.ngFactoryFileName;
+    var routePath = appParams.destDirPath+"/webClient/app/services/"+appParams.ngFactoryFileName+".js";
     fs.exists(routePath, function(exists) {
       if (exists) {
-        dupRoute = true;
+        dupFactory = true;
         console.log(chalk.red("*** there already seems to be a factory with that name, please choose another route name."));
       }//if dir exist
     });
@@ -48,7 +48,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
 
   getCopyTemps: function() {
 
-    if (!dupRoute) {
+    if (!dupFactory) {
 
       // CHECK TO SEE IF THE ROUTE DOESN'T ALREADY EXIST!!
       var baseRoutePath = appParams.destDirPath+"/webClient/app/services/";
@@ -65,16 +65,21 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
 
 
   updateIndexHtmlScriptTags: function(){
-    var spawn = require('child_process').spawn;
-    var path = '/Users/Philippe/Documents/_CODE_HDR/_projects/_OR/_HereApp/HereApp';
-    var tasks = ['cleanTags']
-    process.chdir(path);
-    var child = spawn('gulp', tasks);
-    child.stdout.on('data', function(data) {
-        if (data) {
-            console.log(data.toString())
-        }
-    });
+
+    if (!dupFactory) {
+      var spawn = require('child_process').spawn;
+      var path = appParams.destDirPath;
+      console.log(chalk.red(path));
+      var tasks = ['cleanClientTags','injectClientTags']
+      process.chdir(path);
+      var child = spawn('gulp', tasks);
+      child.stdout.on('data', function(data) {
+          if (data) {
+              console.log(data.toString())
+          }
+      });
+    }//if dupFactory
+
   }
 
 

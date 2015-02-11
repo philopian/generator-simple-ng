@@ -57,6 +57,7 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
         this.mkdir("webClient/app/welcome");
         this.mkdir("webClient/app/ui-components/navbar");
         this.mkdir("webClient/assets/images");
+        this.mkdir("baseServer/");
     },
 
 
@@ -91,16 +92,26 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
             "gulpfile.js"
         );
         this.copy(
-            "_package.json",
-            "package.json"
-        );
-        this.copy(
             "baseApp/favicon.ico",
             "webClient/favicon"
         );
         this.copy(
             "baseApp/assets/images/yeoman.png",  
             "webClient/assets/images/yeoman.png"
+        );
+        this.copy(
+            "baseServer/_server.js",
+            "server/server.js"
+        );
+        this.template(
+            "_package.json",
+            "package.json",
+            placeholderValues
+        );
+        this.template(
+            "baseServer/_package.json",
+            "server/package.json",
+            placeholderValues
         );
         this.template(
             "baseApp/_index.html",                

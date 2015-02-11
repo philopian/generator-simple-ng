@@ -150,55 +150,46 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
 
 
 
-  // inject css into the /app/app.css
-  var cssFile = appParams.destDirPath+'/webClient/app/app.css';
-  
-  fs.readFile(cssFile, 'utf8', function(err, data) {
-    if (err) {
-      console.log(chalk.red("./app/app.css seems to be missing??"));
-    } else {
+      // inject css into the /app/app.css
+      var cssFile = appParams.destDirPath+'/webClient/app/app.css';
+      
+      fs.readFile(cssFile, 'utf8', function(err, data) {
+        if (err) {
+          console.log(chalk.red("./app/app.css seems to be missing??"));
+        } else {
 
-      // find the content between inject:cssimports
-      var re = /inject:cssimports \*\/\n([\s\S]*?)\/\* endinject/;
-      var match = data.match(re);
+          // find the content between inject:cssimports
+          var re = /inject:cssimports \*\/\n([\s\S]*?)\/\* endinject/;
+          var match = data.match(re);
 
-      // find all css files
-      var findFile = [
-        appParams.destDirPath+'/webClient/app/**/*.css',
-        '!'+appParams.destDirPath+'/webClient/app/app.css'
-      ];
+          // find all css files
+          var findFile = [
+            appParams.destDirPath+'/webClient/app/**/*.css',
+            '!'+appParams.destDirPath+'/webClient/app/app.css'
+          ];
 
-      var newContent = "";
-      globby(findFile, function (err, paths) {
-          for (var i in paths){
-            // wrap each file with @import statement
-            if (i != paths.length-1){
-              var newPath = '@import url("'+paths[i].replace(appParams.destDirPath+'/webClient/app','.')+'");\n';
-            } else {
-              var newPath = '@import url("'+paths[i].replace(appParams.destDirPath+'/webClient/app','.')+'");';
-            }
-            newContent += newPath
-          }
-          newContent = "inject:cssimports */\n"+newContent+"\n/* endinject";
+          var newContent = "";
+          globby(findFile, function (err, paths) {
+              for (var i in paths){
+                // wrap each file with @import statement
+                if (i != paths.length-1){
+                  var newPath = '@import url("'+paths[i].replace(appParams.destDirPath+'/webClient/app','.')+'");\n';
+                } else {
+                  var newPath = '@import url("'+paths[i].replace(appParams.destDirPath+'/webClient/app','.')+'");';
+                }
+                newContent += newPath
+              }
+              newContent = "inject:cssimports */\n"+newContent+"\n/* endinject";
 
-          var newData = data.replace(match[0], newContent);
-          fs.writeFile(cssFile, newData, function(err){
-            if (err) throw err;
-            console.log(chalk.green('injected into /app/app.css ') );
-          });
-      });//globby
+              var newData = data.replace(match[0], newContent);
+              fs.writeFile(cssFile, newData, function(err){
+                if (err) throw err;
+                console.log(chalk.green('injected into /app/app.css ') );
+              });
+          });//globby
 
-    }//no error
-  });// fs.readFile
-
-
-
-
-
-
-
-
-
+        }//no error
+      });// fs.readFile
 
 
     }

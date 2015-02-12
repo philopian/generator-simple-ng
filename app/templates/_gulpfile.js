@@ -10,7 +10,8 @@ var runSequence     = require('run-sequence');
 var notify          = require("gulp-notify");
 var print           = require("gulp-print");
 var globby          = require('globby');
-
+var nodemon         = require('gulp-nodemon');
+var livereload      = require('gulp-livereload');
 
 
 
@@ -170,8 +171,21 @@ gulp.task('xx', function(callback) {
 
 
 
+
 //--DEV-SERVER------------------------------------------------------------------------
+gulp.task('express', function() {
+    var serverPath = __dirname+'/server/server.js';
+    nodemon({ script: serverPath });
+});
+gulp.task('livereload', function() {
+    var tinylr = require('tiny-lr')();
+    tinylr.listen(1338);
+});
+gulp.task('serve', ['express','livereload'], function() {
 
-
+    livereload.listen();
+    // TODO: if user delete directory from the client/app/ it breaks the $ gulp serve
+    console.log("....The magic happens on port: 1337!");
+});
 
 

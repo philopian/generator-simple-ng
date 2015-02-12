@@ -4,7 +4,7 @@ var path        = require('path');
 var yeoman      = require('yeoman-generator');
 var chalk       = require('chalk');
 var greeting    = require('../ascii-art-greeting');
-var fse     = require('fs-extra');
+var fse         = require('fs-extra');
 
 // gobals
 var dependsCompleted = {bower:false,npm:false,npmServer:false};
@@ -65,14 +65,11 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
 
 
     copyMainFiles: function(){
-
         var placeholderValues = {
             NG_APP_NAME:            this._.camelize(this.appName)+"App",
             YOUR_APP_NAME_HERE :    this.appName
         }
-
         var camelizeVariable = this._.camelize(this.appname);
-
 
         // copy files and pass placeholder to the files that have placeholder item
         this.template(  
@@ -175,7 +172,7 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
             installProjectServerDependencies();
         });
 
-
+        // install npm components for the /server directory
         var templatePackageJsonFilePath = __dirname+"/templates/baseServer/_package.json";
         var packageJsonFilePath = this.env.cwd+'/server/package.json';
         var serverDirPath = this.env.cwd+'/server/';

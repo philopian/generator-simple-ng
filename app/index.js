@@ -47,8 +47,7 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
         var context = {
             app_name: this.appName
         };
-    },// showResults
-
+    },
 
 
     // create the folders for your app
@@ -60,8 +59,6 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
         this.mkdir("webClient/assets/images");
         this.mkdir("server/");
     },
-
-
 
 
     copyMainFiles: function(){
@@ -157,7 +154,6 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
     },
 
     installDepends: function(){
-        
         // install bower components
         this.bowerInstall("", function(){
             dependsCompleted.bower = true;
@@ -192,7 +188,6 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
                 }
             }); 
         }//installProjectServerDependencies()
-
     }
 
 

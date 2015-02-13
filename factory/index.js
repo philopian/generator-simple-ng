@@ -16,7 +16,7 @@ var routePlaceholderValues = {};
 var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
 
   initializing: function () {
-    this.log('Wait a couple secs while we build out your "' + this.name + '" service file.');
+    this.log('Wait a couple secs while we build out your "' + this.name + '" factory file.');
   },
 
   getParams: function() {
@@ -25,8 +25,8 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     appParams.userDefinedNgModuleName = this.appname;
     appParams.ngModuleName = this._.camelize(appParams.userDefinedNgModuleName) + "App";
     appParams.userDefinedFactoryName = this.name;
-    appParams.ngFactoryFileName = this._.camelize(appParams.userDefinedFactoryName)+"Service";
-    appParams.ngFactoryName = this._.capitalize( this._.camelize(appParams.userDefinedFactoryName)+"Service" );
+    appParams.ngFactoryFileName = this._.camelize(appParams.userDefinedFactoryName)+"Factory";
+    appParams.ngFactoryName = this._.capitalize( this._.camelize(appParams.userDefinedFactoryName)+"Factory" );
     
 
     // define some placeholder variables
@@ -47,9 +47,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
 
 
   getCopyTemps: function() {
-
     if (!dupFactory) {
-
       // CHECK TO SEE IF THE ROUTE DOESN'T ALREADY EXIST!!
       var baseRoutePath = appParams.destDirPath+"/webClient/app/services/";
 
@@ -60,28 +58,43 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
         routePlaceholderValues
       );
     }
-
   },
 
 
-  updateIndexHtmlScriptTags: function(){
 
+  injectScripts: function(){
     if (!dupFactory) {
-      var spawn = require('child_process').spawn;
-      var path = appParams.destDirPath;
-      console.log(chalk.red(path));
-      var tasks = ['cleanClientTags','injectClientTags']
-      process.chdir(path);
-      var child = spawn('gulp', tasks);
-      child.stdout.on('data', function(data) {
-          // if (data) console.log(data.toString())
-      });
-    }//if dupFactory
+      // inject js (controller.js/.js) into the index.html
+      var indexHtmlFile = appParams.destDirPath+'/webClient/index.html';
+      fs.exists(indexHtmlFile, function(exists) {
+        if (exists) {
+          fs.readFile(indexHtmlFile, 'utf8', function(err, data) {
+            // find substring to update
+            var re = /<!-- inject:js -->([\s\S]*?)<!-- endinject -->/m
+            var contentsToUpdate = data.match(re)[1];
 
+            // new content
+            var scriptJs = '<script src="app/services/'+appParams.ngFactoryName+'.js"></script>';
+            var scriptsToAdd = scriptJs + '\n';
+
+            // append new content
+            var newContentToUpdate = contentsToUpdate + scriptsToAdd;
+
+            // update the html file
+            var newHtmlContent = data.replace(contentsToUpdate, newContentToUpdate);
+
+            fs.writeFile(indexHtmlFile, newHtmlContent, function (err) {
+              if (err) throw err;
+              console.log(chalk.green('injected into index.html '), scriptJs);
+            });
+          });// fs.readFile
+
+        } else{
+          console.log(chalk.red("./index.html seems to be missing??"));
+        }
+      });//fs.exists
+    }//!dupRoute
   }
-
-
-
 
 
 });

@@ -1,18 +1,13 @@
 'use strict';
 
 angular.module('<%= NG_APP_NAME %>')
-.factory('<%= FACTORY_NAME %>', function ($http, BASE_URL) {
+.factory('<%= FACTORY_NAME %>', function () {
 
-    var baseUrl = BASE_URL.url+":"+BASE_URL.port+"/";
+    var someData = ["AngularJS","NodeJS","MongoDB","Express"];
 
     return {
-        fetchAllData: function () {
-            var getUrl = baseUrl+'api/collectionName';
-            return $http.get(getUrl);
-        },
-        postData: function (dataToPost) {
-            var postUrl = baseUrl+'api/collectionName';
-            return $http.post(postUrl, dataToPost);
+        fetchData: function () {
+            return someData;
         }
     };
 });

@@ -83,13 +83,6 @@ gulp.task('injectClientTags', function () {
 });
 
 
-
-
-
-
-
-
-
 //--Inject client-side css @imports into the webClient/app/app.css
 gulp.task('injectCss', function () {
 
@@ -179,18 +172,45 @@ gulp.task('xx', function(callback) {
 
 
 
+
+
+//--WATCH-----------------------------------------------------------------------
+gulp.task('reloadPage', function() {
+  gulp.src('webClient/index.html')
+    .pipe(livereload());
+});
+
+gulp.task('watch', function() {
+  livereload.listen();
+  gulp.watch('webClient/app/app.css', ['reloadPage']);
+
+  gulp.watch('webClient/app/**/*.css', ['reloadPage']);
+  gulp.watch('webClient/app/**/*controller.js', ['reloadPage']);
+  gulp.watch('webClient/app/**/*.html', ['reloadPage']);
+
+  gulp.watch('webClient/app/services/*.js', ['reloadPage']);
+
+  gulp.watch('webClient/app/ui-components/**/*.css', ['reloadPage']);
+  gulp.watch('webClient/app/ui-components/**/*.controller.js', ['reloadPage']);
+  gulp.watch('webClient/app/ui-components/**/*.html', ['reloadPage']);
+
+  gulp.watch('bower.json', ['cleanTags']);
+  gulp.watch('server/package.json', ['reloadPage']);
+});
+
+
+
+
+
+
+
+
+
 //--DEV-SERVER------------------------------------------------------------------------
 gulp.task('express', function() {
     var serverPath = __dirname+'/server/server.js';
     nodemon({ script: serverPath });
 });
-gulp.task('livereload', function() {
-    var tinylr = require('tiny-lr')();
-    tinylr.listen(1338);
-});
-gulp.task('serve', ['express','livereload'], function() {
-
-    livereload.listen();
-    // TODO: if user delete directory from the client/app/ it breaks the $ gulp serve
-    console.log("....The magic happens on port: 1337!");
+gulp.task('serve', ['express','watch'], function() {
+    console.log("....The magic happens on port: 8080!");
 });

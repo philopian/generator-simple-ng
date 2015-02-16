@@ -59,7 +59,7 @@ gulp.task('cleanClientTags', function() {
     return gulp.src(['./webClient/index.html'])
            .pipe(replace(regexInjectCss, cleanInjectCss))
            .pipe(replace(regexInjectJs, cleanInjectJs))
-           .pipe(gulp.dest('./webClient/'))
+           .pipe(gulp.dest('./webClient/'));
 });
 //--Inject client-side files tags in the index.html file (scripts/links)
 gulp.task('injectClientTags', function () {
@@ -78,16 +78,24 @@ gulp.task('injectClientTags', function () {
                .pipe(inject(
                   gulp.src(filterDevContent, {read: false})
                ))
-               .pipe(print())
+               .pipe(replace('/webClient/', ''))
                .pipe(gulp.dest('./webClient'))
 });
+
+
+
+
+
+
+
+
 
 //--Inject client-side css @imports into the webClient/app/app.css
 gulp.task('injectCss', function () {
 
   // inject css into the /app/app.css
   var cssFile = __dirname+'/webClient/app/app.css';
-  
+
   fs.readFile(cssFile, 'utf8', function(err, data) {
     if (err) {
       console.log(chalk.red("./app/app.css seems to be missing??"));
@@ -142,13 +150,18 @@ gulp.task('injectCss', function () {
 
 //--Cleanup all the script/style tags in the index.html file
 gulp.task('cleanTags', function(callback) {
-    runSequence(['cleanClientTags','injectClientTags'],['cleanBowerTags','injectBowerTags'],'injectCss', function(){
+    runSequence(
+      'cleanClientTags',
+      'injectClientTags',
+      'cleanBowerTags',
+      'injectBowerTags',
+      'injectCss',
+      function(){
+        var sendMessage = "Finished cleaning/re-injecting client-side and Bower tags into the index.html";
 
-      var sendMessage = "Finished cleaning/re-injecting client-side and Bower tags into the index.html";
-
-      return gulp.src('./webClient/index.html')
-                 .pipe(notify(sendMessage));
-  });
+        return gulp.src('./webClient/index.html')
+                   .pipe(notify(sendMessage));
+      });
 });
 
 //--Remove all the script/style tags in the index.html file
@@ -161,12 +174,6 @@ gulp.task('xx', function(callback) {
                  .pipe(notify(sendMessage));
   });
 });
-
-
-
-
-
-
 
 
 
@@ -187,5 +194,3 @@ gulp.task('serve', ['express','livereload'], function() {
     // TODO: if user delete directory from the client/app/ it breaks the $ gulp serve
     console.log("....The magic happens on port: 1337!");
 });
-
-

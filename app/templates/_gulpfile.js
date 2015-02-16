@@ -12,7 +12,7 @@ var print           = require("gulp-print");
 var globby          = require('globby');
 var nodemon         = require('gulp-nodemon');
 var livereload      = require('gulp-livereload');
-
+var open            = require('gulp-open');
 
 
 
@@ -207,10 +207,31 @@ gulp.task('watch', function() {
 
 
 //--DEV-SERVER------------------------------------------------------------------------
+gulp.task('open', function(){
+
+    function openBrowserApp(openApp){
+      if (openApp == "osx-chrome"){
+        return '/Applications/Google Chrome.app';
+      } else if (openApp == "linux-chrome"){
+        return 'google-chrome';
+      } else if (openApp == "windows-chrome"){
+        return 'chrome';
+      } else if (openApp == "osx-firefox"){
+        return '/Applications/firefox.app';
+      }
+    }
+
+    var options = {
+      url: 'http://localhost:8080',
+      app: openBrowserApp("osx-chrome")
+    };
+    gulp.src('./webClient/index.html')
+        .pipe(open('', options));
+});
 gulp.task('express', function() {
     var serverPath = __dirname+'/server/server.js';
     nodemon({ script: serverPath });
 });
-gulp.task('serve', ['express','watch'], function() {
+gulp.task('serve', ['express','watch', 'open'], function() {
     console.log("....The magic happens on port: 8080!");
 });

@@ -105,8 +105,8 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
             var contentsToUpdate = data.match(re)[1];
 
             // new content
-            var scriptJs = '<script src="/app/' + appParams.ngRouteName + '/' + appParams.ngRouteName + '.js"></script>';
-            var scriptControllerJs = '<script src="/app/' + appParams.ngRouteName + '/' + appParams.ngRouteName + '.controller.js"></script>';
+            var scriptJs = '<script src="app/' + appParams.ngRouteName + '/' + appParams.ngRouteName + '.js"></script>';
+            var scriptControllerJs = '<script src="app/' + appParams.ngRouteName + '/' + appParams.ngRouteName + '.controller.js"></script>';
             var scriptsToAdd = scriptJs + '\n' + scriptControllerJs + '\n';
 
             // append new content
@@ -135,7 +135,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     if (!dupRoute) {
       // inject css into the /app/app.css
       var cssFile = appParams.destDirPath+'/webClient/app/app.css';
-      
+
       fs.readFile(cssFile, 'utf8', function(err, data) {
         if (err) {
           console.log(chalk.red("./app/app.css seems to be missing??"));

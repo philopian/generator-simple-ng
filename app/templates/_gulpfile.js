@@ -232,6 +232,18 @@ gulp.task('express', function() {
     var serverPath = __dirname+'/server/server.js';
     nodemon({ script: serverPath });
 });
-gulp.task('serve', ['express','watch', 'open'], function() {
-    console.log("....The magic happens on port: 8080!");
+gulp.task('serve',  function() {
+    runSequence(
+      'cleanClientTags',
+      'injectClientTags',
+      'cleanBowerTags',
+      'injectBowerTags',
+      'injectCss',
+      'express',
+      'watch',
+      'open',
+      function(){
+        console.log("....The magic happens on port: 8080!");        
+        return gulp.src('./webClient/index.html');
+      });
 });

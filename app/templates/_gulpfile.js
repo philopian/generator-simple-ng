@@ -175,29 +175,23 @@ gulp.task('xx', function(callback) {
 
 
 //--WATCH-----------------------------------------------------------------------
-gulp.task('reloadPage', function() {
-  gulp.src('webClient/index.html')
-    .pipe(livereload());
-});
-
 gulp.task('watch', function() {
   livereload.listen();
-  gulp.watch('webClient/app/app.css', ['reloadPage']);
 
-  gulp.watch('webClient/app/**/*.css', ['reloadPage']);
-  gulp.watch('webClient/app/**/*controller.js', ['reloadPage']);
-  gulp.watch('webClient/app/**/*.html', ['reloadPage']);
+  var watchFiles = [
+    'webClient/app/app.css',
+    'webClient/app/**/*.css',
+    'webClient/app/**/*controller.js',
+    'webClient/app/services/*.js',
+    'webClient/app/ui-components/**/*.css',
+    'webClient/app/ui-components/**/*.controller.js',
+    'webClient/app/ui-components/**/*.html',
+    'server/package.json'
+  ];
 
-  gulp.watch('webClient/app/services/*.js', ['reloadPage']);
-
-  gulp.watch('webClient/app/ui-components/**/*.css', ['reloadPage']);
-  gulp.watch('webClient/app/ui-components/**/*.controller.js', ['reloadPage']);
-  gulp.watch('webClient/app/ui-components/**/*.html', ['reloadPage']);
-
+  gulp.watch(watchFiles, ['reloadPage']);
   gulp.watch('bower.json', ['cleanTags']);
-  gulp.watch('server/package.json', ['reloadPage']);
 });
-
 
 
 

@@ -23,8 +23,10 @@ var api = new express.Router();
 app.use('/api/', api);
 api.get('/test',function(req,res){
 	res.send('["yeoman", "angularjs", "nodejs", "express", "mongodb", "jwt", "gulp", "passport", "spinjs", "animate.css"]');
-})
-
+});
+api.use('/*', function(req, res){
+  res.status(400).send('API Route doesn\'t exist!');
+});
 
 
 

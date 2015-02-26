@@ -142,7 +142,7 @@ gulp.task('injectCss', function () {
 //--BUILD TASKES----------------------------------------------------------------------
 
 //--Cleanup all the script/style tags in the index.html file
-gulp.task('cleanTags', function(callback) {
+gulp.task('cleantags', function(callback) {
     runSequence(
       'cleanClientTags',
       'injectClientTags',
@@ -190,7 +190,7 @@ gulp.task('watch', function() {
   ];
 
   gulp.watch(watchFiles, ['reloadPage']);
-  gulp.watch('bower.json', ['cleanTags']);
+  gulp.watch('bower.json', ['cleantags']);
 });
 
 

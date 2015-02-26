@@ -1,5 +1,6 @@
-var path 	= require('path');
-var express = require('express');
+var path 		= require('path');
+var express 	= require('express');
+var bodyParser  = require('body-parser');
 
 var app = express();
 
@@ -21,6 +22,7 @@ app.use(express.static(clientPath));
 /******** API Calls	**************************************/
 var api = new express.Router();
 app.use('/api/', api);
+api.use( bodyParser.json() );
 api.get('/test',function(req,res){
 	res.send('["yeoman", "angularjs", "nodejs", "express", "mongodb", "jwt", "gulp", "passport", "spinjs", "animate.css"]');
 });

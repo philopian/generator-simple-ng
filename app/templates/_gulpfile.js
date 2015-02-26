@@ -131,6 +131,10 @@ gulp.task('injectCss', function () {
 
 
 
+gulp.task('index', function() {
+  return gulp.src('webClient/index.html')
+             .pipe(livereload());
+});
 
 
 
@@ -176,9 +180,10 @@ gulp.task('xx', function(callback) {
 
 //--WATCH-----------------------------------------------------------------------
 gulp.task('watch', function() {
-  livereload.listen();
+  livereload.listen({ start: true });
 
   var watchFiles = [
+    'webClient/index.html',
     'webClient/app/app.css',
     'webClient/app/**/*.css',
     'webClient/app/**/*controller.js',
@@ -189,9 +194,12 @@ gulp.task('watch', function() {
     'server/package.json'
   ];
 
-  gulp.watch(watchFiles, ['reloadPage']);
-  gulp.watch('bower.json', ['cleantags']);
+  gulp.watch(watchFiles, ['index']);
+  gulp.watch('bower.json', ['cleanTags']);
 });
+
+
+
 
 
 

@@ -1,7 +1,6 @@
 var path 	= require('path');
 var express = require('express');
 
-
 var app = express();
 
 
@@ -13,8 +12,19 @@ app.use(express.static(clientPath));
 
 
 
-
 /******** Add all specific routes here	******************/
+
+
+
+
+
+/******** API Calls	**************************************/
+var api = new express.Router();
+app.use('/api/', api);
+api.get('/test',function(req,res){
+	res.send('["yeoman", "angularjs", "nodejs", "express", "mongodb", "jwt", "gulp", "passport", "spinjs", "animate.css"]');
+})
+
 
 
 
@@ -24,13 +34,7 @@ app.use('/*', function(req, res){
   res.sendFile(clientPath+'/index.html');
 });
 
-
-
-
-
-
 /******** Listen on a port	*****************************/
-
 var port = process.env.PORT || 8080;
 app.listen(port, function() {
 	console.log('The magic happens on port: ' + port);

@@ -20,15 +20,12 @@ var open            = require('gulp-open');
 
 //--Remove all Bower dependency tags in the index.html file(scripts/links)
 gulp.task('cleanBowerTags', function() {
-
     // regex 3rd party
     var regexBowerCss   = /<!-- bower:css -->([\s\S]*?)<!-- endinject -->/g;
     var regexBowerJs    = /<!-- bower:js -->([\s\S]*?)<!-- endinject -->/g;
-
     // clean 3rd party tags
     var cleanBowerCss   = "<!-- bower:css -->\n\t<!-- endinject -->";
     var cleanBowerJs    = "<!-- bower:js -->\n<!-- endinject -->";
-
     return gulp.src(['./webClient/index.html'])
            .pipe(replace(regexBowerCss, cleanBowerCss))
            .pipe(replace(regexBowerJs, cleanBowerJs))
@@ -47,11 +44,9 @@ gulp.task('injectBowerTags', function () {
 
 //--Remove client-side files tags in the index.html file (scripts/links)
 gulp.task('cleanClientTags', function() {
-
     // regex client
     var regexInjectCss  = /<!-- inject:css -->([\s\S]*?)<!-- endinject -->/g;
     var regexInjectJs   = /<!-- inject:js -->([\s\S]*?)<!-- endinject -->/g;
-
     // clean tags
     var cleanInjectCss  = "<!-- inject:css -->\n\t<!-- endinject -->";
     var cleanInjectJs   = "<!-- inject:js -->\n\<!-- endinject -->";
@@ -66,10 +61,8 @@ gulp.task('injectClientTags', function () {
     var filterDevContent = [
         './webClient/app/*.js',
         './webClient/app/*.css',
-
         './webClient/app/**/*.js',
         '!./webClient/app/**/*.spec.js',
-
         './webClient/app/ui-components/**/*.js',
         '!./webClient/app/ui-components/**/*.spec.js',
     ];
@@ -88,12 +81,10 @@ gulp.task('injectCss', function () {
 
   // inject css into the /app/app.css
   var cssFile = __dirname+'/webClient/app/app.css';
-
   fs.readFile(cssFile, 'utf8', function(err, data) {
     if (err) {
       console.log(chalk.red("./app/app.css seems to be missing??"));
     } else {
-
       // find the content between inject:cssimports
       var re = /inject:cssimports \*\/\n([\s\S]*?)\/\* endinject/;
       var match = data.match(re);
@@ -103,7 +94,6 @@ gulp.task('injectCss', function () {
         'webClient/app/**/*.css',
         '!webClient/app/app.css'
       ];
-
       var newContent = "";
       globby(findFile, function (err, paths) {
           for (i in paths){
@@ -116,7 +106,6 @@ gulp.task('injectCss', function () {
             newContent += newPath
           }
           newContent = "inject:cssimports */\n"+newContent+"\n/* endinject";
-
           var newData = data.replace(match[0], newContent);
           fs.writeFile(cssFile, newData, function(err){
             if (err) throw err;
@@ -127,16 +116,6 @@ gulp.task('injectCss', function () {
     }//no error
   });// fs.readFile
 });
-
-
-
-
-gulp.task('index', function() {
-  return gulp.src('webClient/index.html')
-             .pipe(livereload());
-});
-
-
 
 
 
@@ -155,25 +134,13 @@ gulp.task('cleantags', function(callback) {
       'injectCss',
       function(){
         var sendMessage = "Finished cleaning/re-injecting client-side and Bower tags into the index.html";
-
         return gulp.src('./webClient/index.html')
                    .pipe(notify(sendMessage));
       });
 });
+gulp.task('build', function(callback) {
 
-//--Remove all the script/style tags in the index.html file
-gulp.task('xx', function(callback) {
-    runSequence('cleanClientTags','cleanBowerTags', function(){
-
-      var sendMessage = "You shouldn't have anymore Bower/client-side scripts/css tags in your index.html file!";
-
-      return gulp.src('./webClient/index.html')
-                 .pipe(notify(sendMessage));
-  });
 });
-
-
-
 
 
 
@@ -181,10 +148,10 @@ gulp.task('xx', function(callback) {
 //--WATCH-----------------------------------------------------------------------
 gulp.task('watch', function() {
   livereload.listen({ start: true });
-
   var watchFiles = [
     'webClient/index.html',
     'webClient/app/app.css',
+    'webClient/app/**/*.html',
     'webClient/app/**/*.css',
     'webClient/app/**/*controller.js',
     'webClient/app/services/*.js',
@@ -193,24 +160,19 @@ gulp.task('watch', function() {
     'webClient/app/ui-components/**/*.html',
     'server/package.json'
   ];
-
   gulp.watch(watchFiles, ['index']);
   gulp.watch('bower.json', ['cleanTags']);
 });
-
-
-
-
-
-
-
+gulp.task('index', function() {
+  return gulp.src('webClient/index.html')
+             .pipe(livereload());
+});
 
 
 
 
 //--DEV-SERVER------------------------------------------------------------------------
 gulp.task('open', function(){
-
     function openBrowserApp(openApp){
       if (openApp == "osx-chrome"){
         return '/Applications/Google Chrome.app';
@@ -222,7 +184,6 @@ gulp.task('open', function(){
         return '/Applications/firefox.app';
       }
     }
-
     var options = {
       url: 'http://localhost:8080',
       app: openBrowserApp("osx-chrome")

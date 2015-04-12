@@ -4,7 +4,8 @@ angular.module('<%= NG_APP_NAME %>', [
     'ngAnimate',
     'ngResource',
     'ngSanitize',
-    'ui.router'
+    'ui.router',
+    'ui.bootstrap'
 ])
 .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
     $urlRouterProvider

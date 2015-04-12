@@ -10,3 +10,6 @@ body,html,#ui-row,#main-ui-view,.ui-view-container{
 	padding: 0px;
 	margin: 0px;
 }
+.ui-view-container{
+	padding: 0px 20px;
+}

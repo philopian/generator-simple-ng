@@ -52,11 +52,11 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
 
     // create the folders for your app
     scaffoldFolders: function(){
-        this.mkdir("webClient")
-        this.mkdir("webClient/app");
-        this.mkdir("webClient/app/welcome");
-        this.mkdir("webClient/app/ui-components/navbar");
-        this.mkdir("webClient/assets/images");
+        this.mkdir("www")
+        this.mkdir("www/app");
+        this.mkdir("www/app/welcome");
+        this.mkdir("www/app/ui-components/navbar");
+        this.mkdir("www/assets/images");
         this.mkdir("server/");
     },
 
@@ -88,11 +88,11 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
         );
         this.copy(
             "baseApp/favicon.ico",
-            "webClient/favicon"
+            "www/favicon"
         );
         this.copy(
             "baseApp/assets/images/yeoman.png",  
-            "webClient/assets/images/yeoman.png"
+            "www/assets/images/yeoman.png"
         );
         this.copy(
             "baseServer/_server.js",
@@ -105,50 +105,50 @@ var SimpleNgGenerator = yeoman.generators.Base.extend({
         );
         this.template(
             "baseApp/_index.html",                
-            "webClient/index.html", 
+            "www/index.html", 
             placeholderValues
         );
         this.template(
             "baseApp/app/ui-components/navbar/_navbar.html",  
-            "webClient/app/ui-components/navbar/navbar.html", 
+            "www/app/ui-components/navbar/navbar.html", 
             placeholderValues
         );
         this.template(
             "baseApp/app/ui-components/navbar/_navbar.controller.js",                
-            "webClient/app/ui-components/navbar/navbar.controller.js", 
+            "www/app/ui-components/navbar/navbar.controller.js", 
             placeholderValues
         );
         this.copy(
             "baseApp/app/_app.css", 
-            "webClient/app/app.css"
+            "www/app/app.css"
         );
         this.template(
             "baseApp/app/_app.js", 
-            "webClient/app/app.js", 
+            "www/app/app.js", 
             placeholderValues
         );
         this.template(
             "baseApp/app/welcome/_welcome.controller.js", 
-            "webClient/app/welcome/welcome.controller.js", 
+            "www/app/welcome/welcome.controller.js", 
             placeholderValues
         );
         this.template(
             "baseApp/app/welcome/_welcome.controller.spec.js", 
-            "webClient/app/welcome/welcome.controller.spec.js", 
+            "www/app/welcome/welcome.controller.spec.js", 
             placeholderValues
         );
         this.copy(
             "baseApp/app/welcome/_welcome.css", 
-            "webClient/app/welcome/welcome.css"
+            "www/app/welcome/welcome.css"
         );
         this.template(
             "baseApp/app/welcome/_welcome.html", 
-            "webClient/app/welcome/welcome.html", 
+            "www/app/welcome/welcome.html", 
             placeholderValues
         );
         this.template(
             "baseApp/app/welcome/_welcome.js", 
-            "webClient/app/welcome/welcome.js", 
+            "www/app/welcome/welcome.js", 
             placeholderValues
         );
     },

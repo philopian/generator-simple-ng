@@ -6,7 +6,7 @@ var app = express();
 
 
 /******** Middleware *************************************/
-var clientPath = path.resolve(__dirname, '../webClient');
+var clientPath = path.resolve(__dirname, '../www');
 app.use(express.static(clientPath));
 
 

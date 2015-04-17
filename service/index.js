@@ -36,7 +36,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     }
 
     // check to see if route directory already exist
-    var routePath = appParams.destDirPath+"/webClient/app/services/"+appParams.ngServiceFileName+".js";
+    var routePath = appParams.destDirPath+"/www/app/services/"+appParams.ngServiceFileName+".js";
     fs.exists(routePath, function(exists) {
       if (exists) {
         dupService = true;
@@ -49,7 +49,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
   getCopyTemps: function() {
     if (!dupService) {
       // CHECK TO SEE IF THE ROUTE DOESN'T ALREADY EXIST!!
-      var baseRoutePath = appParams.destDirPath+"/webClient/app/services/";
+      var baseRoutePath = appParams.destDirPath+"/www/app/services/";
 
       // copy template to dest dir
       this.template(
@@ -65,7 +65,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
   injectScripts: function(){
     if (!dupService) {
       // inject js (controller.js/.js) into the index.html
-      var indexHtmlFile = appParams.destDirPath+'/webClient/index.html';
+      var indexHtmlFile = appParams.destDirPath+'/www/index.html';
       fs.exists(indexHtmlFile, function(exists) {
         if (exists) {
           fs.readFile(indexHtmlFile, 'utf8', function(err, data) {

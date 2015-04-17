@@ -40,7 +40,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     }
 
     // check to see if route directory already exist
-    var routePath = appParams.destDirPath+"/webClient/app/"+appParams.ngRouteName;
+    var routePath = appParams.destDirPath+"/www/app/"+appParams.ngRouteName;
     fs.exists(routePath, function(exists) {
       if (exists) {
         dupRoute = true;
@@ -48,7 +48,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
       }//if dir exist
     });
 
-    var indexHtmlFile = appParams.destDirPath+'/webClient/index.html';
+    var indexHtmlFile = appParams.destDirPath+'/www/index.html';
     fs.exists(indexHtmlFile, function(exists) {
       if (!exists) {
         dupRoute = true;
@@ -61,7 +61,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
   getCopyTemps: function() {
     if (!dupRoute) {
       // CHECK TO SEE IF THE ROUTE DOESN'T ALREADY EXIST!!
-      var baseRoutePath = appParams.destDirPath+"/webClient/app/"+appParams.ngRouteName;
+      var baseRoutePath = appParams.destDirPath+"/www/app/"+appParams.ngRouteName;
 
       // copy template to dest dir
       this.copy(
@@ -96,7 +96,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
   injectScripts: function(){
     if (!dupRoute) {
       // inject js (controller.js/.js) into the index.html
-      var indexHtmlFile = appParams.destDirPath+'/webClient/index.html';
+      var indexHtmlFile = appParams.destDirPath+'/www/index.html';
       fs.exists(indexHtmlFile, function(exists) {
         if (exists) {
           fs.readFile(indexHtmlFile, 'utf8', function(err, data) {
@@ -134,7 +134,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
   injectCss: function(){
     if (!dupRoute) {
       // inject css into the /app/app.css
-      var cssFile = appParams.destDirPath+'/webClient/app/app.css';
+      var cssFile = appParams.destDirPath+'/www/app/app.css';
 
       fs.readFile(cssFile, 'utf8', function(err, data) {
         if (err) {
@@ -147,8 +147,8 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
 
           // find all css files
           var findFile = [
-            appParams.destDirPath+'/webClient/app/**/*.css',
-            '!'+appParams.destDirPath+'/webClient/app/app.css'
+            appParams.destDirPath+'/www/app/**/*.css',
+            '!'+appParams.destDirPath+'/www/app/app.css'
           ];
 
           var newContent = "";
@@ -156,9 +156,9 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
               for (var i in paths){
                 // wrap each file with @import statement
                 if (i != paths.length-1){
-                  var newPath = '@import url("'+paths[i].replace(appParams.destDirPath+'/webClient/app','.')+'");\n';
+                  var newPath = '@import url("'+paths[i].replace(appParams.destDirPath+'/www/app','.')+'");\n';
                 } else {
-                  var newPath = '@import url("'+paths[i].replace(appParams.destDirPath+'/webClient/app','.')+'");';
+                  var newPath = '@import url("'+paths[i].replace(appParams.destDirPath+'/www/app','.')+'");';
                 }
                 newContent += newPath
               }

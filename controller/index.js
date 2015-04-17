@@ -37,7 +37,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     }
 
     // check to see if route directory already exist
-    var routePath = appParams.destDirPath+"/webClient/app/"+appParams.ngCtrlName;
+    var routePath = appParams.destDirPath+"/www/app/"+appParams.ngCtrlName;
     fs.exists(routePath, function(exists) {
       if (exists) {
         dupCtrl = true;
@@ -45,7 +45,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
       }//if dir exist
     });
 
-    var indexHtmlFile = appParams.destDirPath+'/webClient/index.html';
+    var indexHtmlFile = appParams.destDirPath+'/www/index.html';
     fs.exists(indexHtmlFile, function(exists) {
       if (!exists) {
         dupCtrl = true;
@@ -57,7 +57,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
 
   getCopyTemps: function() {
     if (!dupCtrl) {
-      var baseCtrlPath = appParams.destDirPath+"/webClient/app/"+appParams.ngCtrlName;
+      var baseCtrlPath = appParams.destDirPath+"/www/app/"+appParams.ngCtrlName;
 
       this.template(
         "newCtrl/_newCtrl.controller.js",
@@ -75,7 +75,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
   injectScripts: function(){
     if (!dupCtrl) {
       // inject js (controller.js/.js) into the index.html
-      var indexHtmlFile = appParams.destDirPath+'/webClient/index.html';
+      var indexHtmlFile = appParams.destDirPath+'/www/index.html';
       fs.exists(indexHtmlFile, function(exists) {
         if (exists) {
           fs.readFile(indexHtmlFile, 'utf8', function(err, data) {

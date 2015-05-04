@@ -25,6 +25,11 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     // define variables
     appParams.destDirPath = this.env.cwd;
     appParams.userDefinedNgModuleName = this.appname;
+    if (this.appname.slice(-3) == "App") {
+      appParams.ngModuleName = this._.camelize(appParams.userDefinedNgModuleName);
+    } else {
+      appParams.ngModuleName = this._.camelize(appParams.userDefinedNgModuleName) + "App";
+    }
     appParams.ngModuleName = this._.camelize(appParams.userDefinedNgModuleName) + "App";
     appParams.userDefinedCtrlName = this.name;
     appParams.ngCtrlName = this._.camelize(appParams.userDefinedCtrlName);

@@ -23,11 +23,16 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     // define variables
     appParams.destDirPath = this.env.cwd;
     appParams.userDefinedNgModuleName = this.appname;
+    if (this.appname.slice(-3) == "App") {
+      appParams.ngModuleName = this._.camelize(appParams.userDefinedNgModuleName);
+    } else {
+      appParams.ngModuleName = this._.camelize(appParams.userDefinedNgModuleName) + "App";
+    }
     appParams.ngModuleName = this._.camelize(appParams.userDefinedNgModuleName) + "App";
     appParams.userDefinedServiceName = this.name;
     appParams.ngServiceFileName = this._.camelize(appParams.userDefinedServiceName)+"Service";
     appParams.ngServiceName = this._.capitalize( this._.camelize(appParams.userDefinedServiceName)+"Service" );
-    
+
 
     // define some placeholder variables
     routePlaceholderValues = {

@@ -26,6 +26,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     appParams.destDirPath = this.env.cwd;
     appParams.userDefinedNgModuleName = this.appname;
     appParams.ngModuleName = this._.camelize(appParams.userDefinedNgModuleName) + "App";
+    console.log(appParams.ngModuleName);
     appParams.userDefinedRouteName = this.name;
     appParams.ngRouteName = this._.camelize(appParams.userDefinedRouteName);
     appParams.ngRouteUrlName = "/" + appParams.ngRouteName;
@@ -40,7 +41,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     }
 
     // check to see if route directory already exist
-    var routePath = appParams.destDirPath+"/www/app/"+appParams.ngRouteName;
+    var routePath = appParams.destDirPath+"/www/app/views/"+appParams.ngRouteName;
     fs.exists(routePath, function(exists) {
       if (exists) {
         dupRoute = true;
@@ -61,7 +62,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
   getCopyTemps: function() {
     if (!dupRoute) {
       // CHECK TO SEE IF THE ROUTE DOESN'T ALREADY EXIST!!
-      var baseRoutePath = appParams.destDirPath+"/www/app/"+appParams.ngRouteName;
+      var baseRoutePath = appParams.destDirPath+"/www/app/views/"+appParams.ngRouteName;
 
       // copy template to dest dir
       this.copy(
@@ -105,8 +106,8 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
             var contentsToUpdate = data.match(re)[1];
 
             // new content
-            var scriptJs = '<script src="app/' + appParams.ngRouteName + '/' + appParams.ngRouteName + '.js"></script>';
-            var scriptControllerJs = '<script src="app/' + appParams.ngRouteName + '/' + appParams.ngRouteName + '.controller.js"></script>';
+            var scriptJs = '<script src="app/views/' + appParams.ngRouteName + '/' + appParams.ngRouteName + '.js"></script>';
+            var scriptControllerJs = '<script src="app/views/' + appParams.ngRouteName + '/' + appParams.ngRouteName + '.controller.js"></script>';
             var scriptsToAdd = scriptJs + '\n' + scriptControllerJs + '\n';
 
             // append new content
@@ -147,7 +148,7 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
 
           // find all css files
           var findFile = [
-            appParams.destDirPath+'/www/app/**/*.css',
+            appParams.destDirPath+'/www/app/views/**/*.css',
             '!'+appParams.destDirPath+'/www/app/app.css'
           ];
 

@@ -30,7 +30,6 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     } else {
       appParams.ngModuleName = this._.camelize(appParams.userDefinedNgModuleName) + "App";
     }
-    appParams.ngModuleName = this._.camelize(appParams.userDefinedNgModuleName) + "App";
     appParams.userDefinedCtrlName = this.name;
     appParams.ngCtrlName = this._.camelize(appParams.userDefinedCtrlName);
     appParams.ngControllerName = _.capitalize(appParams.ngCtrlName + "Ctrl");

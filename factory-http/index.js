@@ -28,7 +28,6 @@ var SimpleNgGenerator = yeoman.generators.NamedBase.extend({
     } else {
       appParams.ngModuleName = this._.camelize(appParams.userDefinedNgModuleName) + "App";
     }
-    appParams.ngModuleName = this._.camelize(appParams.userDefinedNgModuleName) + "App";
     appParams.userDefinedFactoryName = this.name;
     appParams.ngFactoryFileName = this._.camelize(appParams.userDefinedFactoryName)+"Factory";
     appParams.ngFactoryName = this._.capitalize( this._.camelize(appParams.userDefinedFactoryName)+"Factory" );

@@ -27,7 +27,7 @@ gulp.task('cleanBowerTags', function() {
     var cleanBowerCss   = "<!-- bower:css -->\n\t<!-- endinject -->";
     var cleanBowerJs    = "<!-- bower:js -->\n<!-- endinject -->";
     return gulp.src(['./www/index.html'])
-    .pipe(plumber())
+           .pipe(plumber())
            .pipe(replace(regexBowerCss, cleanBowerCss))
            .pipe(replace(regexBowerJs, cleanBowerJs))
            .pipe(gulp.dest('./www/'))
@@ -35,7 +35,7 @@ gulp.task('cleanBowerTags', function() {
 //--Inject: all Bower dependency tags in the index.html file(scripts/links)
 gulp.task('injectBowerTags', function () {
     return gulp.src('./www/index.html')
-    .pipe(plumber())
+               .pipe(plumber())
                .pipe(inject(
                     gulp.src(mainBowerFiles({}), {read: false}),  {name: 'bower'}
                ))
@@ -70,7 +70,7 @@ gulp.task('injectClientTags', function () {
     ];
 
     return gulp.src('./www/index.html')
-    .pipe(plumber())
+               .pipe(plumber())
                .pipe(inject(
                   gulp.src(filterDevContent, {read: false})
                ))
@@ -138,7 +138,7 @@ gulp.task('cleantags', function(callback) {
       function(){
         var sendMessage = "Finished cleaning/re-injecting client-side and Bower tags into the index.html";
         return gulp.src('./www/index.html')
-        .pipe(plumber())
+                   .pipe(plumber())
                    .pipe(notify(sendMessage));
       });
 });
@@ -169,7 +169,7 @@ gulp.task('watch', function() {
 });
 gulp.task('index', function() {
   return gulp.src('www/index.html')
-  .pipe(plumber())
+             .pipe(plumber())
              .pipe(livereload());
 });
 
@@ -210,8 +210,7 @@ gulp.task('serve',  function() {
       'express',
       'watch',
       'open',
-      function(){
-        console.log("....The magic happens on port: 8080!");        
+      function(){      
         return gulp.src('./www/index.html');
       });
 });
@@ -224,8 +223,7 @@ gulp.task('default',  function() {
       'injectCss',
       'express',
       'watch',
-      function(){
-        console.log("....The magic happens on port: 8080!");        
+      function(){    
         return gulp.src('./www/index.html');
       });
 });

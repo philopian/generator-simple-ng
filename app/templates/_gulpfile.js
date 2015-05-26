@@ -215,3 +215,17 @@ gulp.task('serve',  function() {
         return gulp.src('./www/index.html');
       });
 });
+gulp.task('default',  function() {
+    runSequence(
+      'cleanClientTags',
+      'injectClientTags',
+      'cleanBowerTags',
+      'injectBowerTags',
+      'injectCss',
+      'express',
+      'watch',
+      function(){
+        console.log("....The magic happens on port: 8080!");        
+        return gulp.src('./www/index.html');
+      });
+});

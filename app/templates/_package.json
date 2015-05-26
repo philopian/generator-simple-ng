@@ -13,6 +13,7 @@
     "gulp-inject": "^1.1.1",
     "gulp-notify": "^2.2.0",
     "gulp-open": "^0.3.2",
+    "gulp-plumber": "^1.0.1",
     "gulp-print": "^1.1.0",
     "gulp-replace": "^0.5.2",
     "main-bower-files": "^2.5.0",

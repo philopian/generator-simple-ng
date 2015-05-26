@@ -13,7 +13,7 @@ var globby          = require('globby');
 var nodemon         = require('gulp-nodemon');
 var livereload      = require('gulp-livereload');
 var open            = require('gulp-open');
-
+var plumber         = require('gulp-plumber');
 
 
 //--DEV TASKS-------------------------------------------------------------------------
@@ -27,6 +27,7 @@ gulp.task('cleanBowerTags', function() {
     var cleanBowerCss   = "<!-- bower:css -->\n\t<!-- endinject -->";
     var cleanBowerJs    = "<!-- bower:js -->\n<!-- endinject -->";
     return gulp.src(['./www/index.html'])
+    .pipe(plumber())
            .pipe(replace(regexBowerCss, cleanBowerCss))
            .pipe(replace(regexBowerJs, cleanBowerJs))
            .pipe(gulp.dest('./www/'))
@@ -34,6 +35,7 @@ gulp.task('cleanBowerTags', function() {
 //--Inject: all Bower dependency tags in the index.html file(scripts/links)
 gulp.task('injectBowerTags', function () {
     return gulp.src('./www/index.html')
+    .pipe(plumber())
                .pipe(inject(
                     gulp.src(mainBowerFiles({}), {read: false}),  {name: 'bower'}
                ))
@@ -68,6 +70,7 @@ gulp.task('injectClientTags', function () {
     ];
 
     return gulp.src('./www/index.html')
+    .pipe(plumber())
                .pipe(inject(
                   gulp.src(filterDevContent, {read: false})
                ))
@@ -135,6 +138,7 @@ gulp.task('cleantags', function(callback) {
       function(){
         var sendMessage = "Finished cleaning/re-injecting client-side and Bower tags into the index.html";
         return gulp.src('./www/index.html')
+        .pipe(plumber())
                    .pipe(notify(sendMessage));
       });
 });
@@ -165,6 +169,7 @@ gulp.task('watch', function() {
 });
 gulp.task('index', function() {
   return gulp.src('www/index.html')
+  .pipe(plumber())
              .pipe(livereload());
 });
 

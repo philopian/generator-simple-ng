@@ -35,4 +35,5 @@ angular.module('<%= NG_APP_NAME %>')
              });
     }
   };
+  
 });
